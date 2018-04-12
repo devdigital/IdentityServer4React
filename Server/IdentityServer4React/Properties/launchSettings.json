@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "IdentityServer4React.Api": {
+    "IdentityServer4React": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
