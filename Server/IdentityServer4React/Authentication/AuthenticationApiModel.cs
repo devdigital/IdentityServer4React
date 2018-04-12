@@ -14,6 +14,6 @@
         public bool RememberLogin { get; set; }
 
         [Required]
-        public string ReturnUrl { get; set; }
+        public string ReturnUri { get; set; }
     }
 }

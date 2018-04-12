@@ -23,9 +23,9 @@
             this.eventService = eventService ?? throw new ArgumentNullException(nameof(eventService));
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/authenticate")]
-        public async Task<IActionResult> Authenticate(AuthenticationApiModel authentication)
+        public async Task<IActionResult> Authenticate([FromBody]AuthenticationApiModel authentication)
         {
             // TODO: error responses
             if (!this.ModelState.IsValid)
@@ -70,7 +70,7 @@
                 properties: props);
 
             // Make sure the returnUrl is still valid, and if so redirect back to authorize endpoint or a local page
-            if (this.interactionService.IsValidReturnUrl(authentication.ReturnUrl) || this.Url.IsLocalUrl(authentication.ReturnUrl))
+            if (this.interactionService.IsValidReturnUrl(authentication.ReturnUri) || this.Url.IsLocalUrl(authentication.ReturnUri))
             {
                 return this.Ok();
 

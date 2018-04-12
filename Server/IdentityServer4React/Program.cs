@@ -1,6 +1,5 @@
 ﻿namespace IdentityServer4React
 {
-    using Api;
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
 

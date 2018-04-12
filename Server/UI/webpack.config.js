@@ -3,8 +3,6 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 
 const outputPath = path.resolve(__dirname, '../IdentityServer4React/wwwroot')
 
-console.log(outputPath)
-
 module.exports = {
   entry: './src/index.js',
   output: {
