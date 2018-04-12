@@ -1,4 +1,4 @@
-﻿namespace IdentityServer4React.Api
+﻿namespace IdentityServer4React
 {
     using System.Collections.Generic;
     using IdentityServer4;
@@ -20,7 +20,7 @@
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "My API")
+                new ApiResource("api1", "My API"),
             };
         }
 
@@ -44,9 +44,9 @@
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
-                    }
-                }
+                        IdentityServerConstants.StandardScopes.Profile,
+                    },
+                },
             };
         }
 
@@ -58,14 +58,14 @@
                 {
                     SubjectId = "1",
                     Username = "alice",
-                    Password = "password"
+                    Password = "password",
                 },
                 new TestUser
                 {
                     SubjectId = "2",
                     Username = "bob",
-                    Password = "password"
-                }
+                    Password = "password",
+                },
             };
         }
     }
