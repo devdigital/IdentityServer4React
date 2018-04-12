@@ -8,8 +8,13 @@ namespace IdentityServer4React.Api
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
+            services.AddMvc();
+
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
+                .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients())
                 .AddTestUsers(Config.GetUsers());
@@ -22,8 +27,16 @@ namespace IdentityServer4React.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            // TODO: white list CORS
+            app.UseCors(builder =>
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+            );
+
             app.UseIdentityServer();
-            app.UseMvc();
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

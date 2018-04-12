@@ -30,9 +30,10 @@
             {
                 new Client
                 {
-                    ClientId = "react",
-                    ClientName = "React",
+                    ClientId = "react-client",
+                    ClientName = "React Client",
                     AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
 
                     // Where to redirect to after login
                     RedirectUris = { "http://localhost:8080/signed-in" },
