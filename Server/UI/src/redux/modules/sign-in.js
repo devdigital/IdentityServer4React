@@ -36,7 +36,7 @@ const reducer = handleActions(
 
 export default reducer
 
-export const signIn = (username, password, rememberMe, redirectUri) => ({
+export const signIn = (username, password, rememberLogin, redirectUrl) => ({
   type: SIGN_IN_START,
-  promise: signInService.signIn(username, password, rememberMe, redirectUri),
+  promise: signInService.signIn(username, password, rememberLogin, redirectUrl),
 })

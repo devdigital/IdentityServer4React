@@ -4,15 +4,12 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import SignInForm from './SignInForm'
 import { signIn } from '~/redux/modules/sign-in'
+import queryString from 'query-string'
 
 class SignIn extends Component {
   signIn = form => {
-    this.props.signIn(
-      form.username,
-      form.password,
-      true,
-      'http://localhost:8080/signed-in'
-    )
+    const qs = queryString.parse(window.location.search)
+    this.props.signIn(form.username, form.password, true, qs.returnUrl)
   }
 
   render() {
@@ -29,6 +26,10 @@ SignIn.propTypes = {
   signIn: PropTypes.func.isRequired,
 }
 
+const mapStateToProps = state => ({
+  routing: state.get('routing'),
+})
+
 const mapDispatchToProps = dispatch => bindActionCreators({ signIn }, dispatch)
 
-export default connect(null, mapDispatchToProps)(SignIn)
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn)

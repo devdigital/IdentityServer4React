@@ -1,12 +1,12 @@
 import apiService from './api-service'
 
 class SignInService {
-  signIn(username, password, rememberMe, returnUri) {
+  signIn(username, password, rememberLogin, returnUrl) {
     return apiService.post('/api/authenticate', {
       username,
       password,
-      rememberMe,
-      returnUri,
+      rememberLogin,
+      returnUrl,
     })
   }
 }

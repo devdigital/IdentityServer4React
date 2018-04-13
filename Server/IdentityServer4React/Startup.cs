@@ -34,6 +34,7 @@
                     .AllowAnyOrigin()
                     .AllowAnyHeader()
                     .AllowAnyMethod()
+                    .AllowCredentials()
             );
 
             app.UseDefaultFiles(new DefaultFilesOptions
