@@ -42,6 +42,11 @@
                     // Where to redirect to after logout
                     PostLogoutRedirectUris = { "http://localhost:8080/signed-out" },
 
+                    AllowedCorsOrigins = new List<string>
+                    {
+                        "http://localhost:8080",
+                    },
+
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,

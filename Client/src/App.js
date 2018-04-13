@@ -7,6 +7,16 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import routes from './routes'
 import createStore from '~/redux/create'
 import createHistory from 'history/createBrowserHistory'
+import oidc from 'oidc-client'
+
+oidc.Log.logger = {
+  debug: message => console.log(message),
+  info: message => console.log(message),
+  warn: message => console.warn(message),
+  error: message => console.error(message),
+}
+
+oidc.Log.level = oidc.Log.DEBUG
 
 const store = createStore()
 const history = createHistory()

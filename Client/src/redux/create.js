@@ -8,6 +8,8 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import routes from '~/routes'
 import { routerMiddleware } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
+import userManager from '~/authentication/user-manager'
+import { loadUser } from 'redux-oidc'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const developmentMiddleware = []
@@ -34,6 +36,8 @@ export default function configureStore(initialState = new Map()) {
       )
     )
   )
+
+  loadUser(store, userManager)
 
   if (module.hot) {
     module.hot.accept('./modules/reducer', () => {

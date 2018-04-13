@@ -7,15 +7,20 @@ import toJS from '~/to-js'
 import { withRouter } from 'react-router-dom'
 
 class SignedIn extends Component {
+  successCallback = user => {
+    this.props.dispatch(push('/'))
+  }
+
+  errorCallback = error => {
+    this.props.dispatch(push('/error'))
+  }
+
   render() {
     return (
       <CallbackComponent
         userManager={userManager}
-        successCallback={() => this.props.dispatch(push('/'))}
-        errorCallback={error => {
-          console.dir(error)
-          this.props.dispatch(push('/error'))
-        }}
+        successCallback={this.successCallback}
+        errorCallback={this.errorCallback}
       >
         <div />
       </CallbackComponent>
