@@ -34,4 +34,7 @@ module.exports = {
       '~': path.resolve(__dirname, './src'),
     },
   },
+  devServer: {
+    historyApiFallback: true,
+  },
 }

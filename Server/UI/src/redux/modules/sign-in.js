@@ -7,7 +7,7 @@ const SIGN_IN_START = 'identity/sign-in/START'
 
 const initialState = fromJS({
   isLoading: false,
-  signIn: null,
+  data: null,
   error: null,
 })
 
@@ -18,16 +18,16 @@ const reducer = handleActions(
         start: state =>
           state
             .set('isLoading', true)
-            .set('signIn', initialState.get('signIn'))
+            .set('data', initialState.get('data'))
             .set('error', initialState.get('error')),
         finish: state => state.set('isLoading', false),
         success: state =>
           state
-            .set('signIn', fromJS(action.payload))
+            .set('data', fromJS(action.payload.data))
             .set('error', initialState.get('error')),
         failure: state =>
           state
-            .set('signIn', initialState.get('signIn'))
+            .set('data', initialState.get('data'))
             .set('error', fromJS(action.payload)),
       }),
   },

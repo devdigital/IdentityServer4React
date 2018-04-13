@@ -6,6 +6,8 @@ import { Iterable, Map } from 'immutable'
 import reducer from './modules/reducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import routes from '~/routes'
+import { routerMiddleware } from 'react-router-redux'
+import createHistory from 'history/createBrowserHistory'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const developmentMiddleware = []
@@ -19,12 +21,13 @@ if (isDevelopment) {
   )
 }
 
-export default function configureStore(router, initialState = new Map()) {
+export default function configureStore(initialState = new Map()) {
   const store = createStore(
     reducer,
     initialState,
     composeWithDevTools(
       applyMiddleware(
+        routerMiddleware(createHistory()),
         reduxPackMiddleware,
         thunkMiddleware,
         ...developmentMiddleware

@@ -2,11 +2,14 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { OidcProvider } from 'redux-oidc'
 import userManager from './authentication/user-manager'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Router, Route } from 'react-router-dom'
+import { syncHistoryWithStore } from 'react-router-redux'
 import routes from './routes'
 import createStore from '~/redux/create'
+import createHistory from 'history/createBrowserHistory'
 
 const store = createStore()
+const history = createHistory()
 
 const Routes = () => (
   <div>
@@ -14,6 +17,7 @@ const Routes = () => (
       <Route
         key={`route-${i}`}
         path={r.path}
+        exact={r.exact}
         render={props => <r.component {...props} />}
       />
     ))}
@@ -24,7 +28,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <OidcProvider store={store} userManager={userManager}>
-        <Router>
+        <Router history={history}>
           <Routes />
         </Router>
       </OidcProvider>

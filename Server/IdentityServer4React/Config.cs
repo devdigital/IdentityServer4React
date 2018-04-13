@@ -34,6 +34,7 @@
                     ClientName = "React Client",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
+                    RequireConsent = false,
 
                     // Where to redirect to after login
                     RedirectUris = { "http://localhost:8080/signed-in" },

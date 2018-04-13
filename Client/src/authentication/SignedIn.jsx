@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { CallbackComponent } from 'redux-oidc'
 import { push } from 'react-router-redux'
 import userManager from '~/authentication/user-manager'
+import toJS from '~/to-js'
+import { withRouter } from 'react-router-dom'
 
 class SignedIn extends Component {
   render() {
@@ -11,14 +13,14 @@ class SignedIn extends Component {
         userManager={userManager}
         successCallback={() => this.props.dispatch(push('/'))}
         errorCallback={error => {
-          console.error(error)
+          console.dir(error)
           this.props.dispatch(push('/error'))
         }}
       >
-        <div>Redirecting...</div>
+        <div />
       </CallbackComponent>
     )
   }
 }
 
-export default SignedIn
+export default withRouter(connect()(toJS(SignedIn)))

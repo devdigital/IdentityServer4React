@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import userManager from '~/authentication/user-manager'
+import { withRouter } from 'react-router-dom'
 
 class Home extends Component {
   signIn = event => {
@@ -27,4 +28,4 @@ const mapStateToProps = state => ({
   user: state.get('oidc').user,
 })
 
-export default connect(mapStateToProps)(Home)
+export default withRouter(connect(mapStateToProps)(Home))
