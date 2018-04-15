@@ -1,4 +1,7 @@
-﻿namespace IdentityServer4React
+﻿using System.Security.Claims;
+using IdentityModel;
+
+namespace IdentityServer4React
 {
     using System.Collections.Generic;
     using IdentityServer4;
@@ -40,8 +43,7 @@
                     RedirectUris = { "http://localhost:8080/signed-in" },
 
                     // Where to redirect to after logout
-                    PostLogoutRedirectUris = { "http://localhost:8080/signed-out" },
-
+                    // PostLogoutRedirectUris = { "http://localhost:8080/signed-out" },
                     AllowedCorsOrigins = new List<string>
                     {
                         "http://localhost:8080",
@@ -65,12 +67,20 @@
                     SubjectId = "1",
                     Username = "alice",
                     Password = "password",
+                    Claims = new List<Claim>
+                    {
+                        new Claim("sub", "1"),
+                    },
                 },
                 new TestUser
                 {
                     SubjectId = "2",
                     Username = "bob",
                     Password = "password",
+                    Claims = new List<Claim>
+                    {
+                        new Claim("sub", "2"),
+                    },
                 },
             };
         }

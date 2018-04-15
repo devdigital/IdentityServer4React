@@ -12,7 +12,7 @@ class SignedIn extends Component {
   }
 
   errorCallback = error => {
-    console.log('props', this.props)
+    console.dir(error)
     this.props.navigateTo('error')
   }
 

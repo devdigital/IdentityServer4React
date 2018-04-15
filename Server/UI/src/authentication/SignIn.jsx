@@ -33,7 +33,7 @@ class SignIn extends Component {
     }
 
     if (data) {
-      window.location.href = encodeURIComponent(data.uri)
+      window.location.href = data.uri
       return <div />
     }
 
