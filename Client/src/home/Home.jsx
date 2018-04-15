@@ -68,4 +68,4 @@ const mapStateToProps = state => ({
   user: state.get('oidc').get('user'),
 })
 
-export default withRouter(connect(mapStateToProps)(toJS(Home)))
+export default connect(mapStateToProps)(toJS(Home))

@@ -29,4 +29,4 @@ class SignedIn extends Component {
   }
 }
 
-export default withRouter(connect()(toJS(SignedIn)))
+export default connect()(SignedIn)

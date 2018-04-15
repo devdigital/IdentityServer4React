@@ -10,6 +10,7 @@ import { routerMiddleware } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
 import userManager from '~/authentication/user-manager'
 import { loadUser } from 'redux-oidc'
+import createOidcMiddleware from 'redux-oidc'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const developmentMiddleware = []
@@ -24,11 +25,14 @@ if (isDevelopment) {
 }
 
 export default function configureStore(initialState = new Map()) {
+  const oidcMiddleware = createOidcMiddleware(userManager)
+
   const store = createStore(
     reducer,
     initialState,
     composeWithDevTools(
       applyMiddleware(
+        oidcMiddleware,
         routerMiddleware(createHistory()),
         reduxPackMiddleware,
         thunkMiddleware,
@@ -37,7 +41,7 @@ export default function configureStore(initialState = new Map()) {
     )
   )
 
-  loadUser(store, userManager)
+  // loadUser(store, userManager)
 
   if (module.hot) {
     module.hot.accept('./modules/reducer', () => {
