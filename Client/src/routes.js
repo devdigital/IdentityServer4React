@@ -7,7 +7,7 @@ import Error from './error/Error'
 const routes = [
   {
     name: 'home',
-    path: '/',
+    path: '/dashboard',
     component: Home,
   },
   {

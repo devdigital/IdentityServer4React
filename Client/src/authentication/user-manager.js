@@ -8,8 +8,7 @@ const userManagerConfig = {
   response_type: 'token id_token',
   scope: 'openid profile',
   filterProtocolClaims: true,
-  loadUserInfo: false,
-  monitorSession: false,
+  loadUserInfo: true,
   // userStore: new WebStorageStateStore({ store: window.localStorage }),
 }
 
