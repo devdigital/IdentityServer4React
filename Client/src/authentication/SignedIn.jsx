@@ -1,22 +1,22 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { CallbackComponent } from 'redux-oidc'
-import { push } from 'react-router-redux'
 import userManager from '~/authentication/user-manager'
 import toJS from '~/to-js'
-import { withRouter } from 'react-router-dom'
+import { actions } from 'redux-router5'
 
 class SignedIn extends Component {
   successCallback = user => {
-    this.props.dispatch(push('/'))
+    this.props.navigateTo('home')
   }
 
   errorCallback = error => {
-    this.props.dispatch(push('/error'))
+    console.log('props', this.props)
+    this.props.navigateTo('error')
   }
 
   render() {
-    console.log('RENDER SIGNEDIN CALLED!')
     return (
       <CallbackComponent
         userManager={userManager}
@@ -29,4 +29,13 @@ class SignedIn extends Component {
   }
 }
 
-export default connect()(SignedIn)
+const mapDispatchToProps = dispatch =>
+  console.log(actions) ||
+  bindActionCreators(
+    {
+      navigateTo: actions.navigateTo,
+    },
+    dispatch
+  )
+
+export default connect(null, mapDispatchToProps)(SignedIn)

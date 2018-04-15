@@ -1,8 +1,8 @@
-import { routerReducer } from 'react-router-redux'
+import { router5Reducer } from 'redux-router5'
 import { immutableReducer as oidcReducer } from 'redux-oidc'
 import { combineReducers } from 'redux-immutable'
 
 export default combineReducers({
-  routing: routerReducer,
+  router: router5Reducer,
   oidc: oidcReducer,
 })

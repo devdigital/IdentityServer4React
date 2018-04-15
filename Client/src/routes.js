@@ -6,19 +6,22 @@ import Error from './error/Error'
 
 const routes = [
   {
+    name: 'home',
     path: '/',
     component: Home,
-    exact: true,
   },
   {
+    name: 'signed-in',
     path: '/signed-in',
     component: SignedIn,
   },
   {
+    name: 'signed-out',
     path: '/signed-out',
     component: SignedOut,
   },
   {
+    name: 'error',
     path: '/error',
     component: Error,
   },

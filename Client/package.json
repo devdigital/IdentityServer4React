@@ -22,13 +22,12 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "history": "^4.7.2",
     "immutable": "^3.8.2",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
-    "react-router-redux": "^4.0.8",
+    "react-router5": "^5.5.2",
     "redux": "^3.7.2",
     "redux-actions": "^2.3.0",
     "redux-devtools-extension": "^2.13.2",
@@ -36,6 +35,8 @@
     "redux-logger": "^3.0.6",
     "redux-oidc": "^3.0.0-beta.17",
     "redux-pack": "^0.1.5",
-    "redux-thunk": "^2.2.0"
+    "redux-router5": "^5.2.1",
+    "redux-thunk": "^2.2.0",
+    "router5": "^5.8.3"
   }
 }
