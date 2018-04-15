@@ -16,6 +16,7 @@ class SignedIn extends Component {
   }
 
   render() {
+    console.log('RENDER SIGNEDIN CALLED!')
     return (
       <CallbackComponent
         userManager={userManager}
