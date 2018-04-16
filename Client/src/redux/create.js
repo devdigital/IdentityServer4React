@@ -4,7 +4,6 @@ import { middleware as reduxPackMiddleware } from 'redux-pack'
 import { createLogger } from 'redux-logger'
 import { Iterable, Map } from 'immutable'
 import reducer from './modules/reducer'
-import { composeWithDevTools } from 'redux-devtools-extension'
 import routes from '~/routes'
 import userManager from '~/authentication/user-manager'
 import createOidcMiddleware, { loadUser } from 'redux-oidc'
@@ -23,23 +22,23 @@ if (isDevelopment) {
 }
 
 export default function configureStore(router, initialState = new Map()) {
-  const oidcMiddleware = createOidcMiddleware(userManager)
+  // const oidcMiddleware = createOidcMiddleware(userManager)
 
   const store = createStore(
     reducer,
     initialState,
-    composeWithDevTools(
+    compose(
       applyMiddleware(
-        oidcMiddleware,
         router5Middleware(router),
         reduxPackMiddleware,
         thunkMiddleware,
         ...developmentMiddleware
-      )
+      ),
+      window.devToolsExtension ? window.devToolsExtension() : f => f
     )
   )
 
-  // loadUser(store, userManager)
+  loadUser(store, userManager)
 
   if (module.hot) {
     module.hot.accept('./modules/reducer', () => {

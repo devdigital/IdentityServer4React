@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { CallbackComponent } from 'redux-oidc'
 import userManager from '~/authentication/user-manager'
-import toJS from '~/to-js'
 import { actions } from 'redux-router5'
 
 class SignedIn extends Component {
   successCallback = user => {
-    this.props.navigateTo('home')
+    this.props.navigateTo('home', {}, { replace: true })
   }
 
   errorCallback = error => {
     console.dir(error)
-    this.props.navigateTo('error')
+    this.props.navigateTo('error', {}, { replace: true })
   }
 
   render() {
@@ -29,13 +29,11 @@ class SignedIn extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  console.log(actions) ||
-  bindActionCreators(
-    {
-      navigateTo: actions.navigateTo,
-    },
-    dispatch
-  )
+SignedIn.propTypes = {
+  navigateTo: PropTypes.func.isRequired,
+}
 
-export default connect(null, mapDispatchToProps)(SignedIn)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ navigateTo: actions.navigateTo }, dispatch)
+
+export default connect(state => ({}), mapDispatchToProps)(SignedIn)

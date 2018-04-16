@@ -5,7 +5,6 @@ import NotFound from '~/chrome/NotFound'
 import { routeNodeSelector } from 'redux-router5'
 
 const App = ({ route }) => {
-  console.log(route)
   const routeName = route ? route.name : null
   const matchingRoute = routeName ? routes.find(r => r.name == routeName) : null
   const component = matchingRoute ? matchingRoute.component : NotFound

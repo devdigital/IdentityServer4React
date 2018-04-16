@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Map } from 'immutable'
 import App from './App'
-import createRouter from './create-router'
+import createRouter from '~/router/create'
 import createStore from '~/redux/create'
 import enableOidcLogging from './oidc-logging'
 import { Provider } from 'react-redux'
@@ -9,39 +10,10 @@ import { RouterProvider } from 'react-router5'
 import { OidcProvider } from 'redux-oidc'
 import userManager from './authentication/user-manager'
 
-// Object.defineProperty(window, 'localStorage', {
-//   configurable: true,
-//   enumerable: true,
-//   value: new Proxy(localStorage, {
-//     set: function(ls, prop, value) {
-//       console.log(`direct assignment: ${prop} = ${value}`)
-//       debugger
-//       ls[prop] = value
-//       return true
-//     },
-//     get: function(ls, prop) {
-//       // The only property access we care about is setItem. We pass
-//       // anything else back without complaint. But using the proxy
-//       // fouls 'this', setting it to this {set: fn(), get: fn()}
-//       // object.
-//       if (prop !== 'setItem') {
-//         if (typeof ls[prop] === 'function') {
-//           return ls[prop].bind(ls)
-//         } else {
-//           return ls[prop]
-//         }
-//       }
-//       console.log('setItem called')
-//       debugger
-//       return ls[prop].bind(ls)
-//     },
-//   }),
-// })
-
 enableOidcLogging()
 
 const router = createRouter()
-const store = createStore(router)
+const store = createStore(router, new Map())
 
 const render = () => {
   ReactDOM.render(
@@ -54,6 +26,10 @@ const render = () => {
     </Provider>,
     document.getElementById('root')
   )
+}
+
+if (module.hot) {
+  module.hot.accept('./App', () => render())
 }
 
 router.start(() => render())

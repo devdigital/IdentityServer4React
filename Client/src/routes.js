@@ -2,13 +2,26 @@ import React from 'react'
 import Home from './home/Home'
 import SignedIn from './authentication/SignedIn'
 import SignedOut from './authentication/SignedOut'
-import Error from './error/Error'
+import Error from './chrome/Error'
+import NotFound from './chrome/NotFound'
+import SignIn from './home/SignIn'
+import Dashboard from './home/Dashboard'
 
 const routes = [
   {
     name: 'home',
-    path: '/dashboard',
+    path: '/',
     component: Home,
+  },
+  {
+    name: 'sign-in',
+    path: '/sign-in',
+    component: SignIn,
+  },
+  {
+    name: 'dashboard',
+    path: '/dashboard',
+    component: Dashboard,
   },
   {
     name: 'signed-in',
@@ -24,6 +37,11 @@ const routes = [
     name: 'error',
     path: '/error',
     component: Error,
+  },
+  {
+    name: 'not-found',
+    path: '/not-found',
+    component: NotFound,
   },
 ]
 
