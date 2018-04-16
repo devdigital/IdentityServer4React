@@ -13,7 +13,7 @@ import userManager from './authentication/user-manager'
 enableOidcLogging()
 
 const router = createRouter()
-const store = createStore(router, new Map())
+const store = createStore(router)
 
 const render = () => {
   ReactDOM.render(

@@ -7,7 +7,7 @@ import routes from '~/routes'
 export default function configureRouter(useListenersPlugin = false) {
   const router = createRouter(routes, {
     defaultRoute: 'not-found',
-    // strictQueryParams: false,
+    strictQueryParams: false,
     useTrailingSlash: false,
   })
     // Plugins

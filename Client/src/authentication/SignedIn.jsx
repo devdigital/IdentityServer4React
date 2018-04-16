@@ -7,21 +7,14 @@ import userManager from '~/authentication/user-manager'
 import { actions } from 'redux-router5'
 
 class SignedIn extends Component {
-  successCallback = user => {
-    this.props.navigateTo('home', {}, { replace: true })
-  }
-
-  errorCallback = error => {
-    console.dir(error)
-    this.props.navigateTo('error', {}, { replace: true })
-  }
-
   render() {
     return (
       <CallbackComponent
         userManager={userManager}
-        successCallback={this.successCallback}
-        errorCallback={this.errorCallback}
+        successCallback={() =>
+          this.props.navigateTo('home', {}, { replace: true })}
+        errorCallback={() =>
+          this.props.navigateTo('error', {}, { replace: true })}
       >
         <div />
       </CallbackComponent>

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import toJS from '~/redux/to-js'
+import { withRoute } from 'react-router5'
 import Dashboard from './Dashboard'
 import SignIn from './SignIn'
 
@@ -20,4 +21,4 @@ const mapStateToProps = state => ({
   user: state.get('oidc').user,
 })
 
-export default connect(mapStateToProps)(toJS(Home))
+export default connect(mapStateToProps)(Home)
