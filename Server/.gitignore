@@ -1,0 +1,6 @@
+.vs
+bin
+obj
+tempkey.rsa
+*.user
+wwwroot
