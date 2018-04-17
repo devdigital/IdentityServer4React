@@ -11,7 +11,11 @@ let SignInForm = props => {
       </div>
       <div>
         <label htmlFor="password">Password</label>
-        <Field name="password" component="input" type="text" />
+        <Field name="password" component="input" type="password" />
+      </div>
+      <div>
+        <label htmlFor="rememberMe">Remember Me?</label>
+        <Field name="rememberMe" component="input" type="checkbox" />
       </div>
       <button type="submit">Sign In</button>
     </form>

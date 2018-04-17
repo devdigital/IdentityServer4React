@@ -1,9 +1,7 @@
-﻿using System.Security.Claims;
-using IdentityModel;
-
-namespace IdentityServer4React
+﻿namespace IdentityServer4React
 {
     using System.Collections.Generic;
+    using System.Security.Claims;
     using IdentityServer4;
     using IdentityServer4.Models;
     using IdentityServer4.Test;

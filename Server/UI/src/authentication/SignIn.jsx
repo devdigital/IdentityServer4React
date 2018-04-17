@@ -10,7 +10,12 @@ import toJS from '~/to-js'
 class SignIn extends Component {
   signIn = form => {
     const qs = queryString.parse(window.location.search)
-    this.props.signIn(form.username, form.password, true, qs.returnUrl)
+    this.props.signIn(
+      form.username,
+      form.password,
+      form.rememberMe,
+      qs.returnUrl
+    )
   }
 
   render() {

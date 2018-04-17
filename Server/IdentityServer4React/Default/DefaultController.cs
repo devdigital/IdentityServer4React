@@ -1,4 +1,4 @@
-﻿namespace IdentityServer4React.Controllers
+﻿namespace IdentityServer4React.Default
 {
     using System;
     using System.IO;

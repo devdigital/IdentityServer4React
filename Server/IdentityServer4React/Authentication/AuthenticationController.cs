@@ -1,7 +1,9 @@
 ﻿namespace IdentityServer4React.Authentication
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
     using IdentityServer4.Events;
     using IdentityServer4.Services;
@@ -67,7 +69,8 @@
             await this.HttpContext.SignInAsync(
                 subject: user.SubjectId,
                 name: user.Username,
-                properties: props);
+                properties: props,
+                claims: new[] { new Claim("foo", "bar") });
 
             // Make sure the returnUrl is still valid, and if so redirect back to authorize endpoint or a local page
             if (this.interactionService.IsValidReturnUrl(authentication.ReturnUrl) || this.Url.IsLocalUrl(authentication.ReturnUrl))

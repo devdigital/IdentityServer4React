@@ -7,10 +7,8 @@ const userManagerConfig = {
   // post_logout_redirect_uri: 'http://localhost:8080/signed-out',
   response_type: 'token id_token',
   scope: 'openid profile',
-  // filterProtocolClaims: true,
-  // loadUserInfo: true,
+  loadUserInfo: true,
   monitorSession: false,
-  // userStore: new WebStorageStateStore({ store: window.localStorage }),
 }
 
 const userManager = createUserManager(userManagerConfig)
