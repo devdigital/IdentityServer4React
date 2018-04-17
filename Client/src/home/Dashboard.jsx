@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import userManager from '~/authentication/user-manager'
 
 const User = ({ user }) => (
   <div>
@@ -35,6 +36,11 @@ User.propTypes = {
 }
 
 class Dashboard extends Component {
+  signOut = event => {
+    event.preventDefault()
+    userManager.signoutRedirect()
+  }
+
   render() {
     const { user } = this.props
 
@@ -46,6 +52,7 @@ class Dashboard extends Component {
       <div>
         <p>You are signed in.</p>
         <User user={user} />
+        <button onClick={this.signOut}>Sign out</button>
       </div>
     )
   }

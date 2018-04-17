@@ -9,7 +9,7 @@ import SignIn from './SignIn'
 class Home extends Component {
   render() {
     const { user } = this.props
-    return user ? <Dashboard user={user} /> : <SignIn />
+    return user && !user.expired ? <Dashboard user={user} /> : <SignIn />
   }
 }
 
