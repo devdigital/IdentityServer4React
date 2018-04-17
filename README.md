@@ -13,18 +13,18 @@ Example of Identity Server 4 UI built with React.
 ## Tech Stack
 
 - Identity Server
-    - React
-    - Redux
-    - Immutable
-    - Redux Form
-    - React Router 4
-    - Axios    
+    - [React](https://reactjs.org/)
+    - [Redux](https://redux.js.org/)
+    - [Immutable](https://facebook.github.io/immutable-js/)
+    - [Redux Form](https://redux-form.com/7.3.0/)
+    - [React Router 4](https://reacttraining.com/react-router/)
+    - [Axios](https://github.com/axios/axios)
 - Example Client
-    - React
-    - Redux
-    - Redux OIDC
-    - Immutable
-    - Router 5
+    - [React](https://reactjs.org/)
+    - [Redux](https://redux.js.org/)
+    - [Redux OIDC](https://github.com/maxmantz/redux-oidc)
+    - [Immutable](https://facebook.github.io/immutable-js/)
+    - [Router 5](http://router5.github.io/)
 
 ## Getting Started
 
