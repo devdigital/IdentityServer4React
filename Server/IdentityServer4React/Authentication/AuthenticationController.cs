@@ -69,8 +69,7 @@
             await this.HttpContext.SignInAsync(
                 subject: user.SubjectId,
                 name: user.Username,
-                properties: props,
-                claims: new[] { new Claim("foo", "bar") });
+                properties: props);
 
             // Make sure the returnUrl is still valid, and if so redirect back to authorize endpoint or a local page
             if (this.interactionService.IsValidReturnUrl(authentication.ReturnUrl) || this.Url.IsLocalUrl(authentication.ReturnUrl))
