@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class AuthenticationApiModel
+    public class SignInApiModel
     {
         [Required]
         public string Username { get; set; }
