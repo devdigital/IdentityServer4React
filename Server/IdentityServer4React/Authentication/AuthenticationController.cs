@@ -27,7 +27,7 @@
 
         [HttpPost]
         [Route("api/authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody]AuthenticationApiModel authentication)
+        public async Task<IActionResult> Authenticate([FromBody]SignInApiModel signIn)
         {
             // TODO: error responses
             if (!this.ModelState.IsValid)
@@ -36,13 +36,13 @@
             }
 
             // TODO: user service
-            var user = Config.GetUsers().FirstOrDefault(u => u.Username == authentication.Username);
+            var user = Config.GetUsers().FirstOrDefault(u => u.Username == signIn.Username);
             if (user == null)
             {
                 return this.Unauthorized();
             }
 
-            if (string.CompareOrdinal(user.Password, authentication.Password) != 0)
+            if (string.CompareOrdinal(user.Password, signIn.Password) != 0)
             {
                 return this.Unauthorized();
             }
@@ -56,7 +56,7 @@
             // otherwise we rely upon expiration configured in cookie middleware.
             AuthenticationProperties props = null;
 
-            if (authentication.RememberLogin)
+            if (signIn.RememberLogin)
             {
                 props = new AuthenticationProperties
                 {
@@ -72,14 +72,12 @@
                 properties: props);
 
             // Make sure the returnUrl is still valid, and if so redirect back to authorize endpoint or a local page
-            if (this.interactionService.IsValidReturnUrl(authentication.ReturnUrl) || this.Url.IsLocalUrl(authentication.ReturnUrl))
+            if (this.interactionService.IsValidReturnUrl(signIn.ReturnUrl) || this.Url.IsLocalUrl(signIn.ReturnUrl))
             {
                 return this.Ok(new
                 {
-                    uri = authentication.ReturnUrl,
+                    uri = signIn.ReturnUrl,
                 });
-
-                // return this.Redirect(authentication.ReturnUrl);
             }
 
             // TODO: 422 result
