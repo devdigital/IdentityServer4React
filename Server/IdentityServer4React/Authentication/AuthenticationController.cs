@@ -1,9 +1,7 @@
 ﻿namespace IdentityServer4React.Authentication
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Claims;
     using System.Threading.Tasks;
     using IdentityServer4.Events;
     using IdentityServer4.Services;
@@ -13,7 +11,7 @@
 
     public class AuthenticationController : Controller
     {
-        private IIdentityServerInteractionService interactionService;
+        private readonly IIdentityServerInteractionService interactionService;
 
         private readonly IEventService eventService;
 
@@ -35,22 +33,17 @@
                 return this.BadRequest();
             }
 
-            // TODO: user service
-            var user = Config.GetUsers().FirstOrDefault(u => u.Username == signIn.Username);
-            if (user == null)
+            var validationResult = ValidateUser(signIn.Username, signIn.Password);
+            if (!validationResult.IsSuccess)
             {
-                return this.Unauthorized();
-            }
-
-            if (string.CompareOrdinal(user.Password, signIn.Password) != 0)
-            {
+                await this.eventService.RaiseAsync(new UserLoginFailureEvent(signIn.Username, "invalid credentials"));
                 return this.Unauthorized();
             }
 
             await this.eventService.RaiseAsync(new UserLoginSuccessEvent(
-                username: user.Username,
-                subjectId: user.SubjectId,
-                name: user.Username));
+                username: signIn.Username,
+                subjectId: validationResult.SubjectId,
+                name: signIn.Username));
 
             // Only set explicit expiration here if user chooses "remember me".
             // otherwise we rely upon expiration configured in cookie middleware.
@@ -67,8 +60,8 @@
 
             // Issue authentication cookie with subject ID and username
             await this.HttpContext.SignInAsync(
-                subject: user.SubjectId,
-                name: user.Username,
+                subject: validationResult.SubjectId,
+                name: signIn.Username,
                 properties: props);
 
             // Make sure the returnUrl is still valid, and if so redirect back to authorize endpoint or a local page
@@ -82,6 +75,20 @@
 
             // TODO: 422 result
             return this.BadRequest();
+        }
+
+        private static ValidationResult ValidateUser(string username, string password)
+        {
+            // TODO: user service
+            var user = Config.GetUsers().FirstOrDefault(u => u.Username == username);
+            if (user == null)
+            {
+                return ValidationResult.Failure();
+            }
+
+            return string.CompareOrdinal(user.Password, password) == 0
+                ? ValidationResult.Success(user.SubjectId)
+                : ValidationResult.Failure();
         }
     }
 }
