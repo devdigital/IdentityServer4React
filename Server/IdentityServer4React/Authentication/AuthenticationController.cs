@@ -118,7 +118,7 @@
             var apiModel = new SignOutApiModel
             {
                 SignOutId = signOutId,
-                ShowSignOutPrompt = true, // TODO: get from settings
+                SignOutPrompt = true, // TODO: get from settings
                 AutomaticRedirectAfterSignOut = false, // TODO: get from settings
                 PostLogoutRedirectUri = context?.PostLogoutRedirectUri,
                 ClientName = context?.ClientId,
@@ -129,14 +129,14 @@
             {
                 // If the user is not authenticated,
                 // then just show logged out page
-                apiModel.ShowSignOutPrompt = false;
+                apiModel.SignOutPrompt = false;
                 return apiModel;
             }
 
             if (context?.ShowSignoutPrompt == false)
             {
                 // it's safe to automatically sign-out
-                apiModel.ShowSignOutPrompt = false;
+                apiModel.SignOutPrompt = false;
                 return apiModel;
             }
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { signOut } from '~/redux/modules/sign-out'
-import { getSignOutContext } from '~/redux/modules/sign-out-context'
+import { checkSignOutContext } from '~/redux/modules/sign-out-context'
 import queryString from 'query-string'
 import toJS from '~/to-js'
 import { withRouter } from 'react-router-dom'
@@ -16,7 +16,7 @@ class SignOut extends Component {
 
   componentDidMount() {
     const qs = queryString.parse(window.location.search)
-    this.props.getSignOutContext(qs.logoutId)
+    this.props.checkSignOutContext(qs.logoutId)
   }
 
   render() {
@@ -47,11 +47,6 @@ class SignOut extends Component {
     }
 
     if (signOutDetails.data) {
-      this.props.history.push({
-        pathname: '/account/logged-out',
-        search: `?logoutId=${signOutDetails.data.signOutId}`,
-      })
-
       return <div />
     }
 
@@ -73,7 +68,7 @@ class SignOut extends Component {
 }
 
 SignOut.propTypes = {
-  getSignOutContext: PropTypes.func.isRequired,
+  checkSignOutContext: PropTypes.func.isRequired,
   signOut: PropTypes.func.isRequired,
   signOutContext: PropTypes.shape({
     isLoading: PropTypes.bool.isRequired,
@@ -93,7 +88,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ getSignOutContext, signOut }, dispatch)
+  bindActionCreators({ checkSignOutContext, signOut }, dispatch)
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(toJS(SignOut))

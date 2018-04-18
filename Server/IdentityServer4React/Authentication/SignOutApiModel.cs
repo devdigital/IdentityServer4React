@@ -2,7 +2,7 @@
 {
     public class SignOutApiModel
     {
-        public bool ShowSignOutPrompt { get; set; }
+        public bool SignOutPrompt { get; set; }
 
         public bool AutomaticRedirectAfterSignOut { get; set; }
 

@@ -4,7 +4,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 const outputPath = path.resolve(__dirname, '../IdentityServer4React/wwwroot')
 
 module.exports = {
-  entry: './src/index.js',
+  entry: ['babel-polyfill', './src/index.js'],
   output: {
     path: outputPath,
     filename: 'main.js',
