@@ -3,6 +3,13 @@ import axios from 'axios'
 const baseUri = 'http://localhost:5000'
 
 class ApiService {
+  get(uri) {
+    return axois(`${baseUri}${uri}`, {
+      method: 'get',
+      withCredentials: true,
+    })
+  }
+
   post(uri, data) {
     return axios(`${baseUri}${uri}`, {
       method: 'post',

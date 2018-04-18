@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class ValidationResult
+    public class ValidationResult
     {
         private ValidationResult(bool isSuccess, string subjectId)
         {

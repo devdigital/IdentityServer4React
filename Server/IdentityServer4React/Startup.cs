@@ -1,6 +1,7 @@
 ﻿namespace IdentityServer4React
 {
     using System.Collections.Generic;
+    using Authentication;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,8 @@
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients())
                 .AddTestUsers(Config.GetUsers());
+
+            services.AddTransient<IUserService, InMemoryUserService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
