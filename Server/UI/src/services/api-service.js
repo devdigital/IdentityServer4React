@@ -4,7 +4,7 @@ const baseUri = 'http://localhost:5000'
 
 class ApiService {
   get(uri) {
-    return axois(`${baseUri}${uri}`, {
+    return axios(`${baseUri}${uri}`, {
       method: 'get',
       withCredentials: true,
     })

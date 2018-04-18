@@ -13,6 +13,12 @@ class AuthenticationService {
   getSignOutContext(signOutId) {
     return apiService.get(`/api/sign-outs/${signOutId}/context`)
   }
+
+  signOut(signOutId) {
+    return apiService.post(`/api/sign-out`, {
+      signOutId,
+    })
+  }
 }
 
 export default new AuthenticationService()
