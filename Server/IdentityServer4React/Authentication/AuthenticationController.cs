@@ -93,15 +93,21 @@
             return this.Ok(apiModel);
         }
 
+        [HttpGet]
+        [Route("api/signed-out-context")]
+        public async Task<IActionResult> GetSignedOutContext([FromQuery]string signOutId = null)
+        {
+            var apiModel = await this.GetSignedOutApiModel(signOutId);
+            return this.Ok(apiModel);
+        }
+
         [HttpPost]
         [Route("api/sign-out")]
         public async Task<IActionResult> SignOut([FromBody] SignOutResponseApiModel signOut)
         {
-            var apiModel = await this.GetSignOutApiModel(signOut.SignOutId);
-
             if (this.User?.Identity?.IsAuthenticated == false)
             {
-                return this.Ok(apiModel);
+                return this.Ok();
             }
 
             // Delete local authentication cookie
@@ -111,7 +117,7 @@
             await this.eventService.RaiseAsync(
                 new UserLogoutSuccessEvent(this.User.GetSubjectId(), this.User.GetDisplayName()));
 
-            return this.Ok(apiModel);
+            return this.Ok();
         }
 
         private async Task<SignOutApiModel> GetSignOutApiModel(string signOutId)
@@ -122,10 +128,6 @@
             {
                 SignOutId = signOutId,
                 SignOutPrompt = true, // TODO: get from settings
-                AutomaticRedirectAfterSignOut = false, // TODO: get from settings
-                PostLogoutRedirectUri = context?.PostLogoutRedirectUri,
-                ClientName = context?.ClientId,
-                SignOutIframeUrl = context?.SignOutIFrameUrl,
             };
 
             if (this.User?.Identity?.IsAuthenticated != true)
@@ -146,6 +148,20 @@
             // Show the logout prompt. this prevents attacks where the user
             // is automatically signed out by another malicious web page.
             return apiModel;
+        }
+
+        private async Task<SignedOutApiModel> GetSignedOutApiModel(string signOutId)
+        {
+            var context = await this.interactionService.GetLogoutContextAsync(signOutId);
+
+            return new SignedOutApiModel
+            {
+                SignOutId = signOutId,
+                AutomaticRedirectAfterSignOut = false, // TODO: get from settings
+                PostLogoutRedirectUri = context?.PostLogoutRedirectUri,
+                ClientName = context?.ClientName,
+                SignOutIframeUrl = context?.SignOutIFrameUrl,
+            };
         }
     }
 }

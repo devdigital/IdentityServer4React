@@ -4,7 +4,7 @@ import { fromJS } from 'immutable'
 import authenticationService from '~/services/authentication-service'
 import history from '~/history'
 
-const SIGN_OUT_CONTEXT_START = 'identity/sign-out-context/START'
+const SIGNED_OUT_CONTEXT_START = 'identity/signed-out-context/START'
 
 const initialState = fromJS({
   isLoading: false,
@@ -14,7 +14,7 @@ const initialState = fromJS({
 
 const reducer = handleActions(
   {
-    [SIGN_OUT_CONTEXT_START]: (state, action) =>
+    [SIGNED_OUT_CONTEXT_START]: (state, action) =>
       handle(state, action, {
         start: state =>
           state
@@ -37,23 +37,19 @@ const reducer = handleActions(
 
 export default reducer
 
-const checkSignOutContextImpl = async signOutId => {
-  const context = await authenticationService.getSignOutContext(signOutId)
+const checkSignedOutContextImpl = async signOutId => {
+  const context = await authenticationService.getSignedOutContext(signOutId)
 
-  if (!context.data.signOutPrompt) {
-    await authenticationService.signOut(signOutId)
-
-    const logoutId = context.data.signOutId
+  if (context.data.automaticRedirectAfterSignOut) {
     history.push({
-      pathname: '/account/logged-out',
-      search: logoutId ? `?logoutId=${logoutId}` : null,
+      pathname: context.data.postLogoutRedirectUri,
     })
   }
 
   return context
 }
 
-export const checkSignOutContext = signOutId => ({
-  type: SIGN_OUT_CONTEXT_START,
-  promise: checkSignOutContextImpl(signOutId),
+export const checkSignedOutContext = signOutId => ({
+  type: SIGNED_OUT_CONTEXT_START,
+  promise: checkSignedOutContextImpl(signOutId),
 })

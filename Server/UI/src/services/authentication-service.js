@@ -16,6 +16,11 @@ class AuthenticationService {
     return apiService.get(`/api/sign-out-context?${qs}`)
   }
 
+  getSignedOutContext(signOutId) {
+    const qs = queryString.stringify({ signOutId })
+    return apiService.get(`/api/signed-out-context?${qs}`)
+  }
+
   signOut(signOutId) {
     return apiService.post(`/api/sign-out`, {
       signOutId,
