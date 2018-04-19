@@ -2,8 +2,9 @@ import { handleActions } from 'redux-actions'
 import { handle } from 'redux-pack'
 import { fromJS } from 'immutable'
 import authenticationService from '~/services/authentication-service'
+import history from '~/history'
 
-const SIGN_IN_START = 'identity/sign-in/START'
+const SIGN_OUT_CONTEXT_START = 'identity/sign-out-context/START'
 
 const initialState = fromJS({
   isLoading: false,
@@ -13,7 +14,7 @@ const initialState = fromJS({
 
 const reducer = handleActions(
   {
-    [SIGN_IN_START]: (state, action) =>
+    [SIGN_OUT_CONTEXT_START]: (state, action) =>
       handle(state, action, {
         start: state =>
           state
@@ -36,12 +37,23 @@ const reducer = handleActions(
 
 export default reducer
 
-export const signIn = (username, password, rememberLogin, redirectUrl) => ({
-  type: SIGN_IN_START,
-  promise: authenticationService.signIn(
-    username,
-    password,
-    rememberLogin,
-    redirectUrl
-  ),
+const checkSignOutContextImpl = async signOutId => {
+  const context = await authenticationService.getSignOutContext(signOutId)
+
+  if (!context.data.signOutPrompt) {
+    await authenticationService.signOut(signOutId)
+
+    const logoutId = context.data.signOutId
+    history.push({
+      pathname: '/account/logged-out',
+      search: logoutId ? `?logoutId=${logoutId}` : null,
+    })
+  }
+
+  return context
+}
+
+export const checkSignOutContext = signOutId => ({
+  type: SIGN_OUT_CONTEXT_START,
+  promise: checkSignOutContextImpl(signOutId),
 })

@@ -2,6 +2,7 @@ import React from 'react'
 import Error from './error/Error'
 import SignIn from './authentication/SignIn'
 import SignOut from './authentication/SignOut'
+import SignedOut from './authentication/SignedOut'
 
 const routes = [
   {
@@ -15,6 +16,10 @@ const routes = [
   {
     path: '/account/logout',
     component: SignOut,
+  },
+  {
+    path: '/account/logged-out',
+    component: SignedOut,
   },
 ]
 

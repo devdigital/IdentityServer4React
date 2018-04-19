@@ -3,7 +3,7 @@ import { handle } from 'redux-pack'
 import { fromJS } from 'immutable'
 import authenticationService from '~/services/authentication-service'
 
-const SIGN_IN_START = 'identity/sign-in/START'
+const SIGN_OUT_START = 'client/sign-out/START'
 
 const initialState = fromJS({
   isLoading: false,
@@ -13,7 +13,7 @@ const initialState = fromJS({
 
 const reducer = handleActions(
   {
-    [SIGN_IN_START]: (state, action) =>
+    [SIGN_OUT_START]: (state, action) =>
       handle(state, action, {
         start: state =>
           state
@@ -22,9 +22,7 @@ const reducer = handleActions(
             .set('error', initialState.get('error')),
         finish: state => state.set('isLoading', false),
         success: state =>
-          state
-            .set('data', fromJS(action.payload.data))
-            .set('error', initialState.get('error')),
+          state.set('data', {}).set('error', initialState.get('error')),
         failure: state =>
           state
             .set('data', initialState.get('data'))
@@ -36,12 +34,7 @@ const reducer = handleActions(
 
 export default reducer
 
-export const signIn = (username, password, rememberLogin, redirectUrl) => ({
-  type: SIGN_IN_START,
-  promise: authenticationService.signIn(
-    username,
-    password,
-    rememberLogin,
-    redirectUrl
-  ),
+export const signOut = () => ({
+  type: SIGN_OUT_START,
+  promise: authenticationService.signOut(),
 })

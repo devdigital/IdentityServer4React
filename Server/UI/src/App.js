@@ -1,8 +1,9 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Router, Route } from 'react-router-dom'
 import routes from './routes'
 import createStore from '~/redux/create'
+import history from './history'
 
 const store = createStore()
 
@@ -21,7 +22,7 @@ const Routes = () => (
 const App = () => {
   return (
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <Routes />
       </Router>
     </Provider>

@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open",
+    "start": "webpack-dev-server --port 9090 --mode development --open",
     "build:dev": "webpack --mode development",
     "build": "webpack --mode production"
   },
@@ -23,6 +23,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
+    "history": "^4.7.2",
     "immutable": "^3.8.2",
     "query-string": "^6.0.0",
     "react": "^16.3.1",

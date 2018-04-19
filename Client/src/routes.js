@@ -1,7 +1,6 @@
 import React from 'react'
 import Home from './home/Home'
 import SignedIn from './authentication/SignedIn'
-import SignedOut from './authentication/SignedOut'
 import Error from './chrome/Error'
 import NotFound from './chrome/NotFound'
 
@@ -15,11 +14,6 @@ const routes = [
     name: 'signed-in',
     path: '/signed-in',
     component: SignedIn,
-  },
-  {
-    name: 'signed-out',
-    path: '/signed-out',
-    component: SignedOut,
   },
   {
     name: 'error',

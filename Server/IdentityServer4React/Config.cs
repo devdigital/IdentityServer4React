@@ -41,7 +41,8 @@
                     RedirectUris = { "http://localhost:8080/signed-in" },
 
                     // Where to redirect to after logout
-                    // PostLogoutRedirectUris = { "http://localhost:8080/signed-out" },
+                    PostLogoutRedirectUris = { "http://localhost:8080" },
+
                     AllowedCorsOrigins = new List<string>
                     {
                         "http://localhost:8080",

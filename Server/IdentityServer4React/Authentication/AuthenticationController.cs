@@ -1,9 +1,9 @@
 ﻿namespace IdentityServer4React.Authentication
 {
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
     using IdentityServer4.Events;
+    using IdentityServer4.Extensions;
     using IdentityServer4.Services;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Http;
@@ -15,17 +15,21 @@
 
         private readonly IEventService eventService;
 
+        private readonly IUserService userService;
+
         public AuthenticationController(
             IIdentityServerInteractionService interactionService,
-            IEventService eventService)
+            IEventService eventService,
+            IUserService userService)
         {
             this.interactionService = interactionService ?? throw new ArgumentNullException(nameof(interactionService));
             this.eventService = eventService ?? throw new ArgumentNullException(nameof(eventService));
+            this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         [HttpPost]
-        [Route("api/authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody]SignInApiModel signIn)
+        [Route("api/sign-in")]
+        public async Task<IActionResult> SignIn([FromBody]SignInApiModel signIn)
         {
             // TODO: error responses
             if (!this.ModelState.IsValid)
@@ -33,7 +37,7 @@
                 return this.BadRequest();
             }
 
-            var validationResult = ValidateUser(signIn.Username, signIn.Password);
+            var validationResult = this.userService.Authenticate(signIn.Username, signIn.Password);
             if (!validationResult.IsSuccess)
             {
                 await this.eventService.RaiseAsync(new UserLoginFailureEvent(signIn.Username, "invalid credentials"));
@@ -73,22 +77,91 @@
                 });
             }
 
-            // TODO: 422 result
-            return this.BadRequest();
+            // Redirect to home page
+            return this.Ok(new
+            {
+                uri = "/",
+            });
         }
 
-        private static ValidationResult ValidateUser(string username, string password)
+        // TODO: make api models required
+        [HttpGet]
+        [Route("api/sign-out-context")]
+        public async Task<IActionResult> GetSignOutContext([FromQuery]string signOutId = null)
         {
-            // TODO: user service
-            var user = Config.GetUsers().FirstOrDefault(u => u.Username == username);
-            if (user == null)
+            var apiModel = await this.GetSignOutApiModel(signOutId);
+            return this.Ok(apiModel);
+        }
+
+        [HttpGet]
+        [Route("api/signed-out-context")]
+        public async Task<IActionResult> GetSignedOutContext([FromQuery]string signOutId = null)
+        {
+            var apiModel = await this.GetSignedOutApiModel(signOutId);
+            return this.Ok(apiModel);
+        }
+
+        [HttpPost]
+        [Route("api/sign-out")]
+        public async Task<IActionResult> SignOut([FromBody] SignOutResponseApiModel signOut)
+        {
+            if (this.User?.Identity?.IsAuthenticated == false)
             {
-                return ValidationResult.Failure();
+                return this.Ok();
             }
 
-            return string.CompareOrdinal(user.Password, password) == 0
-                ? ValidationResult.Success(user.SubjectId)
-                : ValidationResult.Failure();
+            // Delete local authentication cookie
+            await this.HttpContext.SignOutAsync();
+
+            // Raise the logout event
+            await this.eventService.RaiseAsync(
+                new UserLogoutSuccessEvent(this.User.GetSubjectId(), this.User.GetDisplayName()));
+
+            return this.Ok();
+        }
+
+        private async Task<SignOutApiModel> GetSignOutApiModel(string signOutId)
+        {
+            var context = await this.interactionService.GetLogoutContextAsync(signOutId);
+
+            var apiModel = new SignOutApiModel
+            {
+                SignOutId = signOutId,
+                SignOutPrompt = true, // TODO: get from settings
+            };
+
+            if (this.User?.Identity?.IsAuthenticated != true)
+            {
+                // If the user is not authenticated,
+                // then just show logged out page
+                apiModel.SignOutPrompt = false;
+                return apiModel;
+            }
+
+            if (context?.ShowSignoutPrompt == false)
+            {
+                // it's safe to automatically sign-out
+                apiModel.SignOutPrompt = false;
+                return apiModel;
+            }
+
+            // Show the logout prompt. this prevents attacks where the user
+            // is automatically signed out by another malicious web page.
+            return apiModel;
+        }
+
+        private async Task<SignedOutApiModel> GetSignedOutApiModel(string signOutId)
+        {
+            var context = await this.interactionService.GetLogoutContextAsync(signOutId);
+
+            return new SignedOutApiModel
+            {
+                SignOutId = signOutId,
+                AutomaticRedirectAfterSignOut = false, // TODO: get from settings
+                PostLogoutRedirectUri = context?.PostLogoutRedirectUri,
+                ClientName = context?.ClientName,
+                SignOutIframeUrl = context?.SignOutIFrameUrl,
+            };
         }
     }
 }

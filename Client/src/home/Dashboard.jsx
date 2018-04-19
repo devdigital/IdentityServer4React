@@ -35,6 +35,11 @@ User.propTypes = {
 }
 
 class Dashboard extends Component {
+  signOut = event => {
+    event.preventDefault()
+    this.props.signOut()
+  }
+
   render() {
     const { user } = this.props
 
@@ -46,6 +51,7 @@ class Dashboard extends Component {
       <div>
         <p>You are signed in.</p>
         <User user={user} />
+        <button onClick={this.signOut}>Sign out</button>
       </div>
     )
   }
@@ -53,6 +59,7 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   user: PropTypes.object.isRequired,
+  signOut: PropTypes.func.isRequired,
 }
 
 export default Dashboard
