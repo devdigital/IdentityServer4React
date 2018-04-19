@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import userManager from '~/authentication/user-manager'
 
 const User = ({ user }) => (
   <div>
@@ -38,7 +37,7 @@ User.propTypes = {
 class Dashboard extends Component {
   signOut = event => {
     event.preventDefault()
-    userManager.signoutRedirect()
+    this.props.signOut()
   }
 
   render() {
@@ -60,6 +59,7 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   user: PropTypes.object.isRequired,
+  signOut: PropTypes.func.isRequired,
 }
 
 export default Dashboard
