@@ -1,4 +1,5 @@
 import apiService from './api-service'
+import queryString from 'query-string'
 
 class AuthenticationService {
   signIn(username, password, rememberLogin, returnUrl) {
@@ -11,7 +12,8 @@ class AuthenticationService {
   }
 
   getSignOutContext(signOutId) {
-    return apiService.get(`/api/sign-outs/${signOutId}/context`)
+    const qs = queryString.stringify({ signOutId })
+    return apiService.get(`/api/sign-out-context?${qs}`)
   }
 
   signOut(signOutId) {

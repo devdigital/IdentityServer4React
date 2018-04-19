@@ -40,9 +40,10 @@ export default reducer
 const signOutImpl = async signOutId => {
   const context = await authenticationService.signOut(signOutId)
 
+  const logoutId = context.data.signOutId
   history.push({
     pathname: '/account/logged-out',
-    search: `?logoutId=${context.data.signOutId}`,
+    search: logoutId ? `?logoutId=${logoutId}` : null,
   })
 
   return context

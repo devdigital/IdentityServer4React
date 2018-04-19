@@ -77,14 +77,17 @@
                 });
             }
 
-            // TODO: 422 result
-            return this.BadRequest();
+            // Redirect to home page
+            return this.Ok(new
+            {
+                uri = "/",
+            });
         }
 
         // TODO: make api models required
         [HttpGet]
-        [Route("api/sign-outs/{signOutId}/context")]
-        public async Task<IActionResult> GetSignOutContext(string signOutId = null)
+        [Route("api/sign-out-context")]
+        public async Task<IActionResult> GetSignOutContext([FromQuery]string signOutId = null)
         {
             var apiModel = await this.GetSignOutApiModel(signOutId);
             return this.Ok(apiModel);

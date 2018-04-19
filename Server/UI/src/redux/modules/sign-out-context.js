@@ -42,9 +42,11 @@ const checkSignOutContextImpl = async signOutId => {
 
   if (!context.data.signOutPrompt) {
     context = await authenticationService.signOut(signOutId)
+
+    const logoutId = context.data.signOutId
     history.push({
       pathname: '/account/logged-out',
-      search: `?logoutId=${context.data.signOutId}`,
+      search: logoutId ? `?logoutId=${logoutId}` : null,
     })
   }
 

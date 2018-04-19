@@ -13,7 +13,6 @@
         [Required]
         public bool RememberLogin { get; set; }
 
-        [Required]
         public string ReturnUrl { get; set; }
     }
 }

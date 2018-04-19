@@ -7,6 +7,7 @@ import { checkSignOutContext } from '~/redux/modules/sign-out-context'
 import queryString from 'query-string'
 import toJS from '~/to-js'
 import { withRouter } from 'react-router-dom'
+import SignOutForm from './SignOutForm'
 
 class SignOut extends Component {
   signOut = form => {
@@ -51,13 +52,14 @@ class SignOut extends Component {
     }
 
     if (signOutContext.data) {
-      if (signOutContext.data.showSignOutPrompt) {
+      if (signOutContext.data.signOutPrompt) {
         return <SignOutForm onSubmit={this.signOut} />
       }
 
+      const logoutId = signOutContext.data.signOutId
       this.props.history.push({
         pathname: '/account/logged-out',
-        search: `?logoutId=${signOutContext.data.signOutId}`,
+        search: logoutId ? `?logoutId=${logoutId}` : null,
       })
 
       return <div />
