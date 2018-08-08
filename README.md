@@ -105,11 +105,14 @@ services
     .AddAuthentication("MyCookie")
     .AddCookie("MyCookie", options =>
     {
+        options.Cookie.Name = IdentityServerConstants.DefaultCookieAuthenticationScheme;
         options.EventsType = typeof(CustomCookieAuthenticationEvents);
     });
 
 services.AddScoped<CustomCookieAuthenticationEvents>();
 ```
+
+> Note that you can use any name you wish for your custom cookie, here we are using the default `IdentityServerConstants.DefaultCookieAuthenticationScheme` value of `idsrv`.
 
 Here, we register a new `CustomCookieAuthenticationEvents` type to handle cookie events:
 
