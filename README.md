@@ -93,7 +93,7 @@ await this.HttpContext.SignInAsync(
 
 ## Custom Principal Validation or Custom Cookies
 
-If you wish to perform logic when the Identity Server cookie is created or validated, for example adding an additional cookie that sits alongside the Identity Server cookie, you can follow the advise on the [Identity Server documentation](http://docs.identityserver.io/en/release/topics/signin.html).
+If you wish to perform logic when the Identity Server cookie is created or validated, for example adding an additional cookie that sits alongside the Identity Server cookie, you can follow the advice on the [Identity Server documentation](http://docs.identityserver.io/en/release/topics/signin.html).
 
 First, you need to specify cookie authentication middleware explictly, and ensure it's registered in the pipeline *after* Identity Server:
 
